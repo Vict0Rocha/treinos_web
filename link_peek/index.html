@@ -6,17 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Link Peek</title>
     <link rel="stylesheet" href="static/style.css">
+    <script src="static/script.js" defer> </script>
 </head>
 
 <body>
     <main class="main-container">
         <header class="content-header">
             <h1>Link Peek</h1>
-            <p> Uma breve descrição do site.</p>
+            <p> Cole um link do YouTube</p>
         </header>
         <section class="content">
+            <label for="url-input" class="sr-only"> URL do YouTube</label>
             <input type="text" id="url-input" placeholder="Digite a url aqui...">
-            <button id="extrair-inf">Extrair informação</button>
+            <button id="extrair-inf">Extrair informações</button>
+        </section>
+        <section id="result-area" class="result-area">
+
         </section>
     </main>
 </body>
