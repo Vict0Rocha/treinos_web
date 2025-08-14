@@ -1,30 +1,42 @@
 console.log("Ficheiro JavaScript ligado com sucesso!");
 
-// 1. Capturar os elementos da página que vamos usar
 const inputDoLink = document.querySelector('#url-input');
-const botaoExtrair = document.querySelector('#extrair-inf'); // Corrigido para o seu id
+const botaoExtrair = document.querySelector('#extrair-inf');
 const areaDoResultado = document.querySelector('#result-area');
 
-// 2. Adicionar um "ouvinte de eventos" de clique ao botão
 botaoExtrair.addEventListener('click', () => {
-    // 1. Ler o valor do campo de input
     const linkDoUsuario = inputDoLink.value;
 
-    // 2. Extrair o ID do vídeo a partir do link
-    const partesDoLink = linkDoUsuario.split('v=');
-    const idDoVideo = partesDoLink[1];
+    // 1. VERIFICAR SE O LINK É VÁLIDO
+    if (linkDoUsuario.startsWith('https://www.youtube.com/watch?v=')) {
+        // ...dentro do if (linkDoUsuario.startsWith(...)) {
+        const partesDoLink = linkDoUsuario.split('v=');
+        const idDoVideo = partesDoLink[1];
 
-    // 3. Construir o URL da miniatura usando o ID
-    const urlDaThumbnail = `https://img.youtube.com/vi/${idDoVideo}/sddefault.jpg`;
+        const urlDaThumbnail = `https://img.youtube.com/vi/${idDoVideo}/sddefault.jpg`;
 
-    // 4. Limpar a área de resultado antes de adicionar a nova imagem
-    areaDoResultado.innerHTML = '';
+        // 1. Limpa qualquer resultado ou erro anterior
+        areaDoResultado.innerHTML = '';
 
-    // 5. Criar um novo elemento de imagem
-    const novaImagem = document.createElement('img');
-    novaImagem.src = urlDaThumbnail; // Define o 'src' da imagem
-    novaImagem.alt = "Miniatura do vídeo do YouTube"; // Define o texto alternativo
+        // 2. Cria o elemento principal do card
+        const cardDoResultado = document.createElement('div');
+        cardDoResultado.className = 'result-card'; // Adiciona uma classe para o CSS
 
-    // 6. Adicionar a nova imagem à área de resultado na página
-    areaDoResultado.appendChild(novaImagem);
+        const novaImagem = document.createElement('img');
+        novaImagem.src = urlDaThumbnail;
+        novaImagem.alt = "Miniatura do vídeo";
+
+
+        cardDoResultado.appendChild(novaImagem);
+        areaDoResultado.appendChild(cardDoResultado);
+
+        inputDoLink.value = '';
+    } else {
+        // --- CAMINHO DO ERRO: O link é inválido ---
+
+        console.error("ERRO: Por favor, insira um link válido do YouTube.");
+
+        // Mostra uma mensagem de erro na página para o utilizador
+        areaDoResultado.innerHTML = '<p class="error-message">Link inválido! Por favor, cole um link de vídeo do YouTube válido (começando com https://www.youtube.com/watch?v=).</p>';
+    }
 });
